@@ -6,19 +6,20 @@ import (
 )
 
 type RecordProjection struct {
+	t ExpressionType
 	e Expression
 	n string
 }
 
 func (e *RecordProjection) Execute(args []Value) Value {
-	switch v := e.e.Execute(args).(type) {
-	case RecordValue:
-		return v.GetValueByName(e.n)
-	default:
-		panic("invalid type")
-	}
+	v := e.e.Execute(args).(RecordValue)
+	return v.GetValueByName(e.n)
 }
 
-func NewRecordProjection(e Expression, n string) *RecordProjection {
-	return &RecordProjection{e, n}
+func (e *RecordProjection) Type() ExpressionType {
+	return e.t
+}
+
+func NewRecordProjection(t ExpressionType, e Expression, n string) *RecordProjection {
+	return &RecordProjection{t, e, n}
 }

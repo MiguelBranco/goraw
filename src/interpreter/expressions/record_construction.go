@@ -23,6 +23,10 @@ func (e *RecordConstruction) Execute(args []Value) Value {
 	return NewConcreteRecordValue(atts)
 }
 
+func (e *RecordConstruction) Type() ExpressionType {
+	return Record
+}
+
 func NewRecordConstruction(atts []AttributeConstruction) *RecordConstruction {
 	return &RecordConstruction{atts}
 }
